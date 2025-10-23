@@ -14,12 +14,15 @@
 import { useState } from "react";
 import "./App.css";
 
+
+
 function App() {
   const [data, setData] = useState({
     name: "",
     email: "",
     feedback: "",
   });
+  const [count, setCount] =useState(0);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -27,10 +30,16 @@ function App() {
       ...data,
       [name]: value,
     });
+    if (name === "feedback") {
+    setCount(value.length);
+  }
   };
+
+  
 
   return (
     <>
+    <h1>User Form</h1>
       <form id="user-form">
         <label>
           Name:
@@ -57,15 +66,22 @@ function App() {
           <textarea
             name="feedback"
             value={data.feedback}
+            maxLength={200}
             onChange={handleChange}
           />
         </label>
-      </form>
+        <div>
+          <p>Character Count: {count}</p>
+        </div>
+
+      <button id="submit">Submit</button>
+    </form >
 
       <h2>Preview:</h2>
       <p>Name: {data.name}</p>
       <p>Email: {data.email}</p>
       <p>Feedback: {data.feedback}</p>
+      
     </>
   );
 }
